@@ -17,3 +17,7 @@
 .widthLg {
   min-width: 25em;
 }
+
+.bgIndex {
+  background: var(--ui-border-color);
+}

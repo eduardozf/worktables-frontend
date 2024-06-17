@@ -1,10 +1,12 @@
 import { Box, Flex } from "monday-ui-react-core";
+import { InputHTMLAttributes } from "react";
 
-interface ITableProps {
+interface ITableProps extends InputHTMLAttributes<HTMLImageElement> {
   text: string;
+  [x: string]: any;
 }
 
-const TableFlag = ({ text }: ITableProps) => {
+const RenderFlag = ({ text, ...rest }: ITableProps) => {
   return (
     <Flex>
       <Box rounded={Box.roundeds.SMALL} paddingY={Box.paddingYs.LARGE}>
@@ -16,10 +18,11 @@ const TableFlag = ({ text }: ITableProps) => {
           }}
           height={24}
           loading="lazy"
+          {...rest}
         />
       </Box>
     </Flex>
   );
 };
 
-export default TableFlag;
+export default RenderFlag;

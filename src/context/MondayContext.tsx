@@ -32,7 +32,7 @@ export const MondayProvider: React.FC<MondayProviderProps> = ({ children }) => {
     null
   );
   const [nextCursor, setNextCursor] = useState<string | null>(null);
-  const maxRows = 5;
+  const maxRows = 30;
 
   const getBoardID = async () => {
     const id = context?.boardId;

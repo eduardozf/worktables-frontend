@@ -1,22 +1,15 @@
-import { Bullets, Table as TableIcon, Group } from "monday-ui-react-core/icons";
+import { Bullets, Table as TableIcon } from "monday-ui-react-core/icons";
 import { Flex, Tab, Text } from "monday-ui-react-core";
 import SearchBar from "../SearchBar";
 import { useToolbar } from "../../context/ToolbarContext";
 
-export type TabsName = "list" | "table" | "card";
+export type TabsName = "list" | "table";
 
 const Toolbar = () => {
   const { activeTab, handleTabChange } = useToolbar();
   return (
     <Flex justify={Flex.justify.SPACE_BETWEEN} align={Flex.align.BASELINE}>
       <Flex align={Flex.align.CENTER}>
-        <Tab
-          icon={Bullets}
-          active={activeTab === "list"}
-          onClick={() => handleTabChange("list")}
-        >
-          <Text>List</Text>
-        </Tab>
         <Tab
           icon={TableIcon}
           active={activeTab === "table"}
@@ -25,11 +18,11 @@ const Toolbar = () => {
           <Text>Table</Text>
         </Tab>
         <Tab
-          icon={Group}
-          active={activeTab === "card"}
-          onClick={() => handleTabChange("card")}
+          icon={Bullets}
+          active={activeTab === "list"}
+          onClick={() => handleTabChange("list")}
         >
-          <Text>Cards</Text>
+          <Text>List</Text>
         </Tab>
       </Flex>
 
