@@ -53,11 +53,11 @@ export const MondayProvider: React.FC<MondayProviderProps> = ({ children }) => {
 
       const limit = `limit: ${maxRows}`;
       const cursor = `cursor: "${nextCursor}"`;
-      const filter = `query_params: { rules: [{ column_id: "name", compare_value: "${query}" }], operator: and }`;
+      const filter = `query_params: { rules: [{ column_id: "name", compare_value: "${query}", operator: contains_text }], operator: and }`;
 
       const parameters = [limit];
 
-      // if (nextCursor && hasQuery) parameters.push(cursor);
+      // if (nextCursor && !hasQuery) parameters.push(cursor);
       if (hasQuery) parameters.push(filter);
 
       const fullQuery = `
