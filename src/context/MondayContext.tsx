@@ -18,6 +18,7 @@ interface MondayContextProps {
   boardData: Array<IMondayItem>;
   getDataFromMondayBoard: (query: string) => void;
   loading: boolean;
+  hasError: boolean;
 }
 
 const mondaySDK = mondaySdk();
@@ -25,6 +26,7 @@ mondaySDK.setApiVersion("2024-04");
 
 export const MondayProvider: React.FC<MondayProviderProps> = ({ children }) => {
   const [loading, setLoading] = useState<boolean>(false);
+  const [hasError, setHasError] = useState<boolean>(false);
   const [boardData, setData] = useState<Array<IMondayItem>>([]);
   const [context, setContext] = useState<AppFeatureBoardViewContext | null>(
     null
@@ -42,31 +44,41 @@ export const MondayProvider: React.FC<MondayProviderProps> = ({ children }) => {
 
   const getDataFromMondayBoard = async (query: string) => {
     try {
-      console.log("Pegando dados 1");
       const boardId = await getBoardID();
-      console.log({ boardId });
       if (!boardId) return;
 
-      console.log("Pegando dados 2");
-
+      setHasError(false);
       setLoading(true);
       const hasQuery = query?.length;
 
-      const cursor = nextCursor && hasQuery ? `, cursor: "${nextCursor}"` : "";
-      const filter = hasQuery
-        ? `, query_params: {rules: [{column_id: "name", compare_value: "${query}"}], operator: and}`
-        : "";
+      const limit = `limit: ${maxRows}`;
+      const cursor = `cursor: "${nextCursor}"`;
+      const filter = `query_params: { rules: [{ column_id: "name", compare_value: "${query}" }], operator: and }`;
+
+      const parameters = [limit];
+
+      // if (nextCursor && hasQuery) parameters.push(cursor);
+      if (hasQuery) parameters.push(filter);
 
       const fullQuery = `
-        query { 
-          boards(ids: ${boardId}) 
-            { id name items_page(limit: ${maxRows}${filter}${cursor}) { 
-              cursor items { 
-                id name column_values { id text } 
-              }
+      query { 
+        boards(ids: ${boardId}) { 
+          id 
+          name 
+          items_page(${parameters}) { 
+            cursor 
+            items { 
+              id 
+              name 
+              column_values { 
+                id 
+                text 
+              } 
             }
           }
-        }`;
+        }
+      }
+    `;
 
       const response = await mondaySDK.api(fullQuery);
       console.log({ response });
@@ -75,8 +87,9 @@ export const MondayProvider: React.FC<MondayProviderProps> = ({ children }) => {
       setData(response.data.boards[0].items_page.items);
       setLoading(false);
     } catch (error: any) {
+      setHasError(true);
       setLoading(false);
-      console.warn(error.message);
+      console.trace(error);
     }
   };
 
@@ -93,7 +106,7 @@ export const MondayProvider: React.FC<MondayProviderProps> = ({ children }) => {
 
   return (
     <MondayContext.Provider
-      value={{ boardData, getDataFromMondayBoard, loading }}
+      value={{ boardData, getDataFromMondayBoard, loading, hasError }}
     >
       <ThemeProvider
         themeConfig={context?.themeConfig}

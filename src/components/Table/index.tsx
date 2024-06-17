@@ -64,7 +64,7 @@ const tableColumns: Array<ITableColumn> = [
 ];
 
 const Table = ({ tableData }: ITableProps) => {
-  const { loading } = useMonday();
+  const { loading, hasError } = useMonday();
 
   const getColumn = (data: IMondayItem, name: string): string => {
     const col = data.column_values.find((it) => it.id === name);
@@ -91,6 +91,7 @@ const Table = ({ tableData }: ITableProps) => {
     <MondayTable
       dataState={{
         isLoading: loading,
+        isError: hasError,
       }}
       columns={tableColumns}
       emptyState={<TableEmptyState />}
