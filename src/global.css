@@ -1,0 +1,19 @@
+@import "~monday-ui-style/dist/index.min.css";
+
+.blueColor {
+  color: var(--primary-color);
+  fill: var(--primary-color);
+}
+
+.whiteColor {
+  color: var(--fixed-light-color);
+  fill: var(--fixed-light-color);
+}
+
+.blueBgColor {
+  background: var(--primary-color);
+}
+
+.widthLg {
+  min-width: 25em;
+}

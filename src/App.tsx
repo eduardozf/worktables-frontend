@@ -1,25 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Flex, Box } from "monday-ui-react-core";
+import AppHeader from "./components/AppHeader";
+import Toolbar from "./components/Toolbar";
+import ContentViewer from "./components/ContentViewer";
+import { ToolbarProvider } from "./context/ToolbarContext";
+import { MondayProvider } from "./context/MondayContext";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <MondayProvider>
+      <Box paddingX={Box.paddingXs.XL}>
+        <Flex
+          direction={Flex.directions.COLUMN}
+          gap={Flex.gaps.LARGE}
+          align={Flex.align.STRETCH}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <AppHeader />
+          <ToolbarProvider>
+            <Toolbar />
+            <ContentViewer />
+          </ToolbarProvider>
+        </Flex>
+      </Box>
+    </MondayProvider>
   );
 }
 
