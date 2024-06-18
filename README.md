@@ -1,46 +1,61 @@
-# Getting Started with Create React App
+Monday.com Integration Project
+==============================
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project integrates a custom UI into a monday.com board to display and interact with data fetched from monday.com itself and from a custom [REST API](https://github.com/eduardozf/worktables-backend)  .
 
-## Available Scripts
+Project Overview
+----------------
 
-In the project directory, you can run:
+The project consists of two main components:
 
-### `npm start`
+-   **Front-end:** A React application that runs within the monday.com environment, fetching and displaying data from the board.
+-   **Back-end:** A small REST API that fetches weather data from a third-party APIs based on user interactions with the front-end.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Getting Started
+---------------
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+To set up the project locally and integrate it with your monday.com account, follow these steps:
 
-### `npm test`
+1.  **Clone the repository:**
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+    ```cmd
+    git clone https://github.com/eduardozf/worktables-frontend.git
+    cd worktables-frontend
+    ```
 
-### `npm run build`
+3.  **Install dependencies:**
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    ```cmd
+    npm install
+    ```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+5.  **Run the front-end application:**
+    ```cmd
+    npm start
+    ```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    This will start the front-end application at `http://localhost:3000`.
 
-### `npm run eject`
+7.  **Access the monday.com Board:**
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+    -   Use the provided credentials by Worktable's to log in and navigate to the "DEVELOP HERE" board view.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Front-end Requirements
+----------------------
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+### Features
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+-   **Search Bar:** Allows users to input text to filter country information displayed on the UI.
+-   **Filtered Results:** Displays countries based on the search input. Clicking on a country opens detailed information.
+-   **Modal for Detailed Information:** Displays country statistics and weather data fetched from the back-end API in a modal or similar UI element.
+-   **Smooth User Experience:** Smooth transitions and interactions across different screen sizes.
+-   **Error Handling:** Basic error handling for API calls and user inputs.
+-   **Clean and Modular Code:** Followed best practices for React application development.
+-   **Responsiveness:** Works well on all screen sizes.
+-   **monday.com UI Components:** Utilized UI elements from monday.com's React UI Components Library.
 
-## Learn More
+### Implementation Details
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+-   **Framework:** Built using React JS.
+-   **Language:** TypeScript for type-safe development.
+-   **API Integration:** Fetches country data from monday.com using the monday.com JavaScript SDK. Weather data fetched via the custom back-end API.
