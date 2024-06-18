@@ -4,6 +4,8 @@ import { useMonday } from "../../context/MondayContext";
 import { useToolbar } from "../../context/ToolbarContext";
 import { TabsName } from "../Toolbar";
 import ListView from "../ListView";
+import { ModalProvider } from "../../context/ModalContext";
+import CountryModal from "../CountryModal";
 
 const ContentViewer = () => {
   const { boardData } = useMonday();
@@ -14,7 +16,12 @@ const ContentViewer = () => {
     list: () => <ListView listData={boardData} />,
   };
 
-  return <Box style={{ overflow: "visible" }}>{typeOfView[activeTab]()}</Box>;
+  return (
+    <ModalProvider>
+      <CountryModal />
+      <Box style={{ overflow: "visible" }}>{typeOfView[activeTab]()}</Box>
+    </ModalProvider>
+  );
 };
 
 export default ContentViewer;

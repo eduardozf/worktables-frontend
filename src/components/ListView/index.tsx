@@ -3,12 +3,15 @@ import { IMondayItem } from "../../context/MondayContext";
 import TableEmptyState from "../TableEmptyState";
 import RenderFlag from "../RenderFlag";
 import { getColumn } from "../../utils";
+import { useModal } from "../../context/ModalContext";
 
 interface IListViewProps {
   listData: Array<IMondayItem>;
 }
 
 const ListView = ({ listData }: IListViewProps) => {
+  const { openModalWithItem } = useModal();
+
   return (
     <>
       {listData?.length ? (
@@ -24,7 +27,7 @@ const ListView = ({ listData }: IListViewProps) => {
             >
               <ListItem
                 onClick={() => {
-                  window.alert("OPEN MODAL");
+                  openModalWithItem(item);
                 }}
               >
                 <Flex gap={Flex.gaps.SMALL}>

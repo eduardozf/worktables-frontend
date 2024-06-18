@@ -39,7 +39,7 @@ export const MondayProvider: React.FC<MondayProviderProps> = ({ children }) => {
     if (id) return id;
 
     const res: any = await mondaySDK.get("context");
-    return res.data.boardId;
+    return res?.data?.boardId;
   };
 
   const getDataFromMondayBoard = async (query: string) => {
@@ -59,7 +59,7 @@ export const MondayProvider: React.FC<MondayProviderProps> = ({ children }) => {
 
       // if (nextCursor && !hasQuery) parameters.push(cursor);
       if (hasQuery) parameters.push(filter);
-
+      // TODO add pages
       const fullQuery = `
       query { 
         boards(ids: ${boardId}) { 

@@ -1,5 +1,6 @@
 import { Box, Flex } from "monday-ui-react-core";
 import { InputHTMLAttributes } from "react";
+import { config } from "../../config";
 
 interface ITableProps extends InputHTMLAttributes<HTMLImageElement> {
   text: string;
@@ -7,11 +8,17 @@ interface ITableProps extends InputHTMLAttributes<HTMLImageElement> {
 }
 
 const RenderFlag = ({ text, ...rest }: ITableProps) => {
+  const endpoint = config.flagsEndpoint;
+
   return (
     <Flex>
-      <Box rounded={Box.roundeds.SMALL} paddingY={Box.paddingYs.LARGE}>
+      <Box
+        rounded={Box.roundeds.SMALL}
+        paddingY={Box.paddingYs.LARGE}
+        style={{ overflow: "visible" }}
+      >
         <img
-          src={`http://purecatamphetamine.github.io/country-flag-icons/3x2/${text}.svg`}
+          src={`${endpoint}/${text}.svg`}
           alt={text}
           onError={(event: any) => {
             event.target.src = "error.jpg";

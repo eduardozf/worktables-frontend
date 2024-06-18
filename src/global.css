@@ -21,3 +21,7 @@
 .bgIndex {
   background: var(--ui-border-color);
 }
+
+.opacity-70 {
+  opacity: 70%;
+}

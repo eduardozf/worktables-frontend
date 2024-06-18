@@ -17,6 +17,7 @@ import { ITableColumn } from "monday-ui-react-core/dist/types/components/Table/T
 import TableFlag from "../RenderFlag";
 import { IMondayItem, useMonday } from "../../context/MondayContext";
 import { getColumn, getMapURL, parseTimezone } from "../../utils";
+import { useModal } from "../../context/ModalContext";
 
 export interface ITableProps {
   tableData: Array<IMondayItem>;
@@ -35,13 +36,11 @@ const tableColumns: Array<ITableColumn> = [
     title: "Country Name",
     width: { min: 200, max: 400 },
   },
-
   {
     id: "timezone",
     loadingStateType: "medium-text",
     title: "Timezone",
   },
-
   {
     id: "gdp",
     loadingStateType: "medium-text",
@@ -58,16 +57,11 @@ const tableColumns: Array<ITableColumn> = [
     title: "Map Location",
     width: 150,
   },
-  {
-    id: "modal",
-    loadingStateType: "rectangle",
-    title: "",
-    width: 150,
-  },
 ];
 
 const Table = ({ tableData }: ITableProps) => {
   const { loading, hasError } = useMonday();
+  const { openModalWithItem } = useModal();
 
   return (
     <Box scrollable style={{ height: "450px" }}>
@@ -89,7 +83,7 @@ const Table = ({ tableData }: ITableProps) => {
           {tableData?.map((data) => (
             <div
               onClick={() => {
-                window.alert("Open MODAL!");
+                openModalWithItem(data);
               }}
               style={{ cursor: "pointer" }}
             >
@@ -123,19 +117,8 @@ const Table = ({ tableData }: ITableProps) => {
                     text="Open Map"
                     target={Link.target.NEW_WINDOW}
                     icon={ExternalPage}
+                    onClick={(e) => e.stopPropagation()}
                   />
-                </TableCell>
-
-                <TableCell>
-                  <Button
-                    leftIcon={NewTab}
-                    onClick={() => {
-                      window.alert("SHOW MODAL");
-                    }}
-                    size={Button.sizes.SMALL}
-                  >
-                    <Text color={Text.colors.FIXED_LIGHT}>Show More</Text>
-                  </Button>
                 </TableCell>
               </TableRow>
             </div>
