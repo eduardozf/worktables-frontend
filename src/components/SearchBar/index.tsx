@@ -6,7 +6,7 @@ const SearchBar = () => {
 
   return (
     <Search
-      placeholder="Enter a city name..."
+      placeholder="Enter a country name..."
       className="widthLg"
       onChange={(value) => handleSearch(value)}
     />
