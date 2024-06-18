@@ -11,17 +11,21 @@ import {
 } from "monday-ui-react-core";
 import { AxiosResponse } from "axios";
 import { getColumn, parseWeatherData } from "../../utils";
-import WeatherForecastItem from "../WeatherForecastItem";
+import WeatherForecastItem, {
+  IWeatherForecastItem,
+} from "../WeatherForecastItem";
 import { Heading } from "monday-ui-react-core/next";
 import CountryInfo from "../CountryInfo";
 import WeatherForecastItemSkeleton from "../WeatherForecastItemSkeleton";
+import { useToast } from "../../context/ToastContext";
 
-type WeatherResponseType = unknown | any; // TODO
+type WeatherResponseType = Array<IWeatherForecastItem> | null;
 
 const CountryModal = () => {
+  const { addToast } = useToast();
+  const [itemWeather, setWeatherData] = useState<WeatherResponseType>(null);
   const { isModalOpen, closeModal, selectedItem, isModalLoading, changeLoad } =
     useModal();
-  const [itemWeather, setWeatherData] = useState<WeatherResponseType>(null);
 
   const fetchWeatherData = useCallback(async () => {
     try {
@@ -33,7 +37,7 @@ const CountryModal = () => {
         lon: getColumn(selectedItem, "longitude"),
       };
 
-      const response = await weatherApi.get<AxiosResponse<WeatherResponseType>>(
+      const response = await weatherApi.get<AxiosResponse<unknown>>(
         "/weather",
         { params }
       );
@@ -41,9 +45,9 @@ const CountryModal = () => {
       setWeatherData(normalizedData);
       changeLoad(false);
     } catch (error) {
-      // TODO Toast notifier
-      console.error(error);
+      addToast("Could not get weather data. Try again later.", "error");
       changeLoad(false);
+      console.error(error);
     }
   }, [selectedItem]);
 
@@ -72,22 +76,25 @@ const CountryModal = () => {
         <Heading weight={Heading.weights.BOLD}>Forecast</Heading>
         <Divider />
 
-        {isModalLoading ? (
-          <>
-            <WeatherForecastItemSkeleton />
-            <WeatherForecastItemSkeleton />
-          </>
-        ) : (
-          <Flex
-            gap={Flex.gaps.MEDIUM}
-            direction={Flex.directions.COLUMN}
-            align={Flex.align.STRETCH}
-          >
-            {itemWeather?.map((day: any, index: number) => (
-              <WeatherForecastItem forecast={day} key={index} />
-            ))}
-          </Flex>
-        )}
+        <Flex
+          gap={Flex.gaps.MEDIUM}
+          direction={Flex.directions.COLUMN}
+          align={Flex.align.STRETCH}
+        >
+          {/* Render skeleton items if loading */}
+          {isModalLoading ? (
+            <>
+              <WeatherForecastItemSkeleton />
+              <WeatherForecastItemSkeleton />
+            </>
+          ) : (
+            <>
+              {itemWeather?.map((day: any, index: number) => (
+                <WeatherForecastItem forecast={day} key={index} />
+              ))}
+            </>
+          )}
+        </Flex>
       </ModalContent>
       <ModalFooterButtons
         primaryButtonText="Close"
