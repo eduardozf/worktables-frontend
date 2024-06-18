@@ -15,7 +15,12 @@ const ListView = ({ listData }: IListViewProps) => {
   return (
     <>
       {listData?.length ? (
-        <Box scrollable style={{ height: "450px" }}>
+        <Box
+          scrollable
+          style={{ height: "425px" }}
+          border={Box.borders.DEFAULT}
+          rounded={Box.roundeds.SMALL}
+        >
           {listData?.map((item, index) => (
             <List
               renderOnlyVisibleItems

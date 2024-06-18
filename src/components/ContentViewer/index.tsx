@@ -6,6 +6,7 @@ import { TabsName } from "../Toolbar";
 import ListView from "../ListView";
 import { ModalProvider } from "../../context/ModalContext";
 import CountryModal from "../CountryModal";
+import DataPages from "../DataPages";
 
 const ContentViewer = () => {
   const { boardData } = useMonday();
@@ -20,6 +21,7 @@ const ContentViewer = () => {
     <ModalProvider>
       <CountryModal />
       <Box style={{ overflow: "visible" }}>{typeOfView[activeTab]()}</Box>
+      <DataPages />
     </ModalProvider>
   );
 };

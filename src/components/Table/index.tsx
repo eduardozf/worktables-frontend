@@ -64,7 +64,7 @@ const Table = ({ tableData }: ITableProps) => {
   const { openModalWithItem } = useModal();
 
   return (
-    <Box scrollable style={{ height: "450px" }}>
+    <Box scrollable style={{ height: "425px" }}>
       <MondayTable
         dataState={{
           isLoading: loading,
