@@ -9,21 +9,16 @@ import {
   ModalFooterButtons,
   ModalHeader,
 } from "monday-ui-react-core";
-import { AxiosResponse } from "axios";
-import { getColumn, parseWeatherData } from "../../utils";
-import WeatherForecastItem, {
-  IWeatherForecastItem,
-} from "../WeatherForecastItem";
+import { getColumn } from "../../utils";
+import WeatherForecastItem from "../WeatherForecastItem";
 import { Heading } from "monday-ui-react-core/next";
 import CountryInfo from "../CountryInfo";
 import WeatherForecastItemSkeleton from "../WeatherForecastItemSkeleton";
 import { useToast } from "../../context/ToastContext";
 
-type WeatherResponseType = Array<IWeatherForecastItem> | null;
-
 const CountryModal = () => {
   const { addToast } = useToast();
-  const [itemWeather, setWeatherData] = useState<WeatherResponseType>(null);
+  const [itemWeather, setWeatherData] = useState<IWeatherResponse | null>(null);
   const { isModalOpen, closeModal, selectedItem, isModalLoading, changeLoad } =
     useModal();
 
@@ -37,12 +32,11 @@ const CountryModal = () => {
         lon: getColumn(selectedItem, "longitude"),
       };
 
-      const response = await weatherApi.get<AxiosResponse<unknown>>(
-        "/weather",
-        { params }
-      );
-      const normalizedData = parseWeatherData(response?.data);
-      setWeatherData(normalizedData);
+      const response = await weatherApi.get<IWeatherResponse>("/weather", {
+        params,
+      });
+
+      setWeatherData(response?.data);
       changeLoad(false);
     } catch (error) {
       addToast("Could not get weather data. Try again later.", "error");
@@ -89,8 +83,12 @@ const CountryModal = () => {
             </>
           ) : (
             <>
-              {itemWeather?.map((day: any, index: number) => (
-                <WeatherForecastItem forecast={day} key={index} />
+              {itemWeather?.data?.map((day: any, index: number) => (
+                <WeatherForecastItem
+                  api={itemWeather.source}
+                  forecast={day}
+                  key={index}
+                />
               ))}
             </>
           )}

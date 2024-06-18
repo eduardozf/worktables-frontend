@@ -4,30 +4,16 @@ import { getOpenWeatherMapIcon } from "../../utils";
 import WeatherHourCard from "../WeatherHourCard";
 import WeatherInfoGroup from "../WeatherInfoGroup";
 
-export interface IWeatherInfo {
-  avg_temp_c: number;
-  avg_humidity: number;
-  avg_wind_speed: number;
-  avg_rain_chance: number;
-  condition: string;
-  icon: string;
-}
-
-export interface IWeatherInfoHour extends IWeatherInfo {
-  time: Date;
-}
-
-export interface IWeatherForecastItem {
-  date: Date;
-  day_resume: IWeatherInfo;
-  hour: Array<IWeatherInfoHour>;
-}
-
 interface IWeatherItemProps {
+  api: WeatherSources;
   forecast: IWeatherForecastItem;
 }
 
-const WeatherForecastItem = ({ forecast }: IWeatherItemProps) => {
+const WeatherForecastItem = ({ api, forecast }: IWeatherItemProps) => {
+  const icon =
+    api === "weather_api"
+      ? getOpenWeatherMapIcon(forecast.day_resume.icon)
+      : forecast.day_resume.icon;
   return (
     <Box
       padding={Box.paddings.MEDIUM}
@@ -43,7 +29,7 @@ const WeatherForecastItem = ({ forecast }: IWeatherItemProps) => {
         <Flex align={Flex.align.START}>
           <Box>
             <img
-              src={getOpenWeatherMapIcon(forecast.day_resume.icon)}
+              src={icon}
               alt={forecast.day_resume.condition}
               height={40}
               style={{ filter: "drop-shadow(0 0 1px black)" }}

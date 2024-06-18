@@ -1,7 +1,6 @@
 import { format } from "date-fns";
 import { Box, Flex, Text } from "monday-ui-react-core";
 import { getOpenWeatherMapIcon } from "../../utils";
-import { IWeatherInfoHour } from "../WeatherForecastItem";
 
 const WeatherHourCard = (data: IWeatherInfoHour) => {
   return (
