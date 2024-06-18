@@ -12,6 +12,7 @@ interface ToolbarContextProps {
   handleTabChange: (tabName: TabsName) => void;
 }
 
+// Handles tab change and SearchBar actions
 export const ToolbarProvider: React.FC<ToolbarProviderProps> = ({
   children,
 }) => {

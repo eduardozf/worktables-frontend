@@ -24,6 +24,7 @@ interface MondayContextProps {
 const mondaySDK = mondaySdk();
 mondaySDK.setApiVersion("2024-04");
 
+// Handles mondaySDK actions
 export const MondayProvider: React.FC<MondayProviderProps> = ({ children }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [hasError, setHasError] = useState<boolean>(false);

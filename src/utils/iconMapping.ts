@@ -1,3 +1,4 @@
+// Receives a WeatherApi icon id and returns correspondent SVG
 export const iconMapWeatherToOpenMap = {
   day: {
     "113": "/weather/01d.svg",

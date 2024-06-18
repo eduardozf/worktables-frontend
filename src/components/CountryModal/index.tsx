@@ -14,6 +14,7 @@ import { getColumn, parseWeatherData } from "../../utils";
 import WeatherForecastItem from "../WeatherForecastItem";
 import { Heading } from "monday-ui-react-core/next";
 import CountryInfo from "../CountryInfo";
+import WeatherForecastItemSkeleton from "../WeatherForecastItemSkeleton";
 
 type WeatherResponseType = unknown | any; // TODO
 
@@ -72,7 +73,10 @@ const CountryModal = () => {
         <Divider />
 
         {isModalLoading ? (
-          <div>Loading...</div>
+          <>
+            <WeatherForecastItemSkeleton />
+            <WeatherForecastItemSkeleton />
+          </>
         ) : (
           <Flex
             gap={Flex.gaps.MEDIUM}

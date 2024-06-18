@@ -6,6 +6,7 @@ import {
 } from "../components/WeatherForecastItem";
 import { iconMapWeatherToOpenMap } from "./iconMapping";
 
+// Map input to expected interface
 const parseCommon = (item: any): IWeatherInfo => {
   const weatherInfo: IWeatherInfo = {
     avg_temp_c: item?.avgtemp_c || item?.temp_c || 0,
@@ -19,6 +20,7 @@ const parseCommon = (item: any): IWeatherInfo => {
   return weatherInfo;
 };
 
+// Map input to expected interface
 export const parseWeatherData = (data: any): IWeatherForecastItem[] => {
   const forecastData = data?.forecast?.forecastday;
   if (!forecastData) return [];
@@ -41,6 +43,7 @@ export const parseWeatherData = (data: any): IWeatherForecastItem[] => {
   });
 };
 
+// Find custom animated weather icon by WeatherApi url
 export const getOpenWeatherMapIcon = (url: string): string => {
   const match = url.match(/\/(\d+)\.png$/);
   const emptyUrl = "/error.jpg";

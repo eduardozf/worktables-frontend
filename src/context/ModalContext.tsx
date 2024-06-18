@@ -15,6 +15,7 @@ interface ModalProviderProps {
   children: React.ReactNode;
 }
 
+// Handles modal actions
 export const ModalProvider = ({ children }: ModalProviderProps) => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [isModalLoading, setIsModalLoading] = useState<boolean>(false);

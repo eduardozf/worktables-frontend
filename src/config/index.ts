@@ -1,3 +1,4 @@
+// Expose configuration constants
 export const config = {
   flagsEndpoint: "http://purecatamphetamine.github.io/country-flag-icons/3x2",
   api: {
